@@ -1,9 +1,11 @@
 var phpPrintRBeautifier = {
     prepareString: function(s) {
-        s = s.replace(/(Array|Object)\n(\s*)\(/g,
-            '<a href="#" onclick="phpPrintRBeautifier.toggleDisplay(this.nextSibling);return false;">$1</a><span class="debug-data" style="display:none"> <a href="#" onclick="phpPrintRBeautifier.toggleChildren(this.parentNode);return false">+</a> <a href="#" onclick="phpPrintRBeautifier.toggleRecursive(this.parentNode);return false;">*</a>\n$2(');
-        s = s.replace(/\n(\s*?)\)\n/g, '\n$1)\n</span>');
-        return s;
+        return s.replace(/(Array|Object)\n(\s*)\(/g,
+            '<a href="#" onclick="phpPrintRBeautifier.toggleDisplay(this.nextSibling);return false;">$1</a>' +
+                '<span class="debug-data" style="display:none"> ' +
+                '<a href="#" onclick="phpPrintRBeautifier.toggleChildren(this.parentNode);return false">+</a> ' +
+                '<a href="#" onclick="phpPrintRBeautifier.toggleRecursive(this.parentNode);return false;">+*</a>\n$2(')
+            .replace(/\n(\s*?)\)\n/g, '\n$1)\n</span>');
     },
 
     toggleDisplay: function(e, show) {

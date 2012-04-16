@@ -6,5 +6,37 @@
 </head>
 <body>
 
+<script type="text/javascript" src="js/print_r.js"></script>
+<a href="#" onclick="phpPrintRBeautifier.prepare(this.nextSibling);phpPrintRBeautifier.toggleDisplay(this.nextSibling);return false;">debug</a><pre style="display:none">MyClass Object
+(
+    [secret:MyClass:private] => secret data
+    [arrayData:protected] => Array
+        (
+            [0] => 1
+            [1] => 2
+            [three] => 3
+            [four] => Array
+                (
+                    [0] => 5
+                    [1] => 6
+                    [2] => 7
+                    [3] => stdClass Object
+                        (
+                            [0] => 8
+                            [1] => 9
+                            [2] => 10
+                            [3] => 11
+                            [4] => 12
+                        )
+
+                )
+
+        )
+
+    [selfRecursion] => MyClass Object
+ *RECURSION*
+)
+</pre>
+
 </body>
 </html>
