@@ -5,7 +5,7 @@ var phpPrintRBeautifier = {
                 '<span class="debug-data" style="display:none"> ' +
                 '<a href="#" onclick="phpPrintRBeautifier.toggleChildren(this.parentNode);return false">+</a> ' +
                 '<a href="#" onclick="phpPrintRBeautifier.toggleRecursive(this.parentNode);return false;">+*</a>\n$2(')
-            .replace(/\n(\s*?)\)\n/g, '\n$1)\n</span>');
+            .replace(/\n(\s*?)\)\n/g, '\n$1)</span>\n');
     },
 
     toggleDisplay: function(e, show) {
