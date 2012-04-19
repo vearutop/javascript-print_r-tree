@@ -1,3 +1,5 @@
+// https://github.com/vearutop/javascript-print_r-tree
+
 var phpPrintRBeautifier = {
     prepareString: function(s) {
         return s.replace(/(Array|Object)\n(\s*)\(/g,
