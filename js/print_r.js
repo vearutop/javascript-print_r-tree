@@ -4,7 +4,7 @@ var phpPrintRBeautifier = {
             '<a href="#" onclick="phpPrintRBeautifier.toggleDisplay(this.nextSibling);return false;">$1</a>' +
                 '<span class="debug-data" style="display:none"> ' +
                 '<a href="#" onclick="phpPrintRBeautifier.toggleChildren(this.parentNode);return false">+</a> ' +
-                '<a href="#" onclick="phpPrintRBeautifier.toggleRecursive(this.parentNode);return false;">+*</a>\n$2(')
+                '<a href="#" onclick="phpPrintRBeautifier.toggleRecursive(this.parentNode);return false;">*</a>\n$2(')
             .replace(/\n(\s*?)\)\n/g, '\n$1)</span>\n');
     },
 
@@ -28,7 +28,8 @@ var phpPrintRBeautifier = {
     toggleRecursive:function (e, show) {
         for (var i = 0; i < e.childNodes.length; ++i) {
             if ('debug-data' == e.childNodes[i].className) {
-                phpPrintRBeautifier.toggleChildren(e.childNodes[i], show);
+                phpPrintRBeautifier.toggleDisplay(e.childNodes[i], show);
+                phpPrintRBeautifier.toggleRecursive(e.childNodes[i], show);
             }
         }
     },
