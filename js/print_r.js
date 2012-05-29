@@ -3,40 +3,68 @@
 var phpPrintRBeautifier = {
     prepareString: function(s) {
         return s.replace(/(Array|Object)\n(\s*)\(/g,
-            '<a href="#" onclick="phpPrintRBeautifier.toggleDisplay(this.nextSibling);return false;">$1</a>' +
-                '<span class="debug-data" style="display:none"> ' +
-                '<a href="#" onclick="phpPrintRBeautifier.toggleChildren(this.parentNode);return false" title="toggle children">\\</a> ' +
-                '<a href="#" onclick="phpPrintRBeautifier.toggleRecursive(this.parentNode);return false;" title="toggle recursive">*</a>\n$2(')
-            .replace(/\n(\s*?)\)\n/g, '\n$1)</span>\n');
+            '<span class="debug-controls"><a href="#" onclick="phpPrintRBeautifier.toggleDisplay(this.parentNode.nextSibling);return false;">$1</a> ' +
+                '<a href="#" onclick="phpPrintRBeautifier.toggleChildren(this.parentNode.nextSibling, false);return false" title="toggle children">\\</a> ' +
+                '<a href="#" onclick="phpPrintRBeautifier.toggleChildren(this.parentNode.nextSibling, true);return false;" title="toggle recursive">*</a> ' +
+                '</span><span class="debug-data" style="display:none"> ' +
+                '\n$2(')
+            .replace(/\n(\s*?)\)\n/g, '\n$1)\n</span>');
     },
 
-    toggleDisplay: function(e, show) {
-        if ('undefined' != typeof show) {
-            e.style.display = show ? '' : 'none';
+    autoShow: function(e, level) {
+        var show;
+        if (!level) {
+            return e.style.display == 'none';
         }
         else {
-            e.style.display = e.style.display == 'none' ? '' : 'none';
-        }
-    },
-
-    toggleChildren:function (e, show) {
-        for (var i = 0; i < e.childNodes.length; ++i) {
-            if ('debug-data' == e.childNodes[i].className) {
-                phpPrintRBeautifier.toggleDisplay(e.childNodes[i], show);
+            for (var i = 0; i < e.childNodes.length; ++i) {
+                if ('debug-data' == e.childNodes[i].className) {
+                    show = this.autoShow(e.childNodes[i], level - 1);
+                    if (-1 != show) {
+                        return show;
+                    }
+                }
             }
         }
+        return -1;
     },
 
-    toggleRecursive:function (e, show) {
+
+    toggleDisplay: function(e, show) {
+        if ('undefined' == typeof show) {
+            show = this.autoShow(e, 0);
+        }
+
+        e.style.display = show ? '' : 'none';
+        return show;
+    },
+
+    toggleChildren:function (e, recursive, show) {
+        if ('undefined' == typeof show) {
+            show = this.autoShow(e, recursive ? 2 : 1);
+            if (-1 == show) {
+                if (recursive) {
+                    return this.toggleChildren(e, false);
+                }
+                else {
+                    return this.toggleDisplay(e);
+                }
+            }
+        }
         for (var i = 0; i < e.childNodes.length; ++i) {
             if ('debug-data' == e.childNodes[i].className) {
-                phpPrintRBeautifier.toggleDisplay(e.childNodes[i], show);
-                phpPrintRBeautifier.toggleRecursive(e.childNodes[i], show);
+                this.toggleDisplay(e.childNodes[i], show);
+                if (recursive) {
+                    this.toggleChildren(e.childNodes[i], true, show);
+                }
             }
+        }
+        if (show) {
+            this.toggleDisplay(e, show);
         }
     },
 
     prepare: function(e) {
-        e.innerHTML = phpPrintRBeautifier.prepareString(e.innerHTML);
+        e.innerHTML = this.prepareString(e.innerHTML);
     }
 };
