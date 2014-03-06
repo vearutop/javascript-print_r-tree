@@ -15,8 +15,77 @@ Converts scalar string output from PHP print_r function to collapsible DOM struc
     <a href="https://github.com/vearutop/javascript-print_r-tree">https://github.com/vearutop/javascript-print_r-tree</a>
 </p>
 
+
+<pre style="display:none">
+MyClass Object
+(
+    [secret:MyClass:private] => secret data
+    [arrayData:protected] => Array
+        (
+            [0] => 1
+            [1] => 2
+            [three] => 3
+            [four] => Array
+                (
+                    [0] => 5
+                    [1] => 6
+                    [2] => 7
+                    [3] => stdClass Object
+                        (
+                            [0] => 8
+                            [1] => 9
+                            [2] => 10
+                            [3] => 11
+                            [4] => 12
+                        )
+
+                )
+
+        )
+
+    [selfRecursion] => MyClass Object
+ *RECURSION*
+)
+</pre><script src="js/print_r.anonymous.min.js" type="text/javascript"></script>
+
+
+
 <script type="text/javascript" src="js/print_r.js"></script>
-<a href="#" onclick="phpPrintRBeautifier.prepare(this.nextSibling);phpPrintRBeautifier.toggleDisplay(this.nextSibling);return false;">click me</a><pre style="display:none">
+<pre style="display:none">
+MyClass Object
+(
+    [secret:MyClass:private] => secret data
+    [arrayData:protected] => Array
+        (
+            [0] => 1
+            [1] => 2
+            [three] => 3
+            [four] => Array
+                (
+                    [0] => 5
+                    [1] => 6
+                    [2] => 7
+                    [3] => stdClass Object
+                        (
+                            [0] => 8
+                            [1] => 9
+                            [2] => 10
+                            [3] => 11
+                            [4] => 12
+                        )
+
+                )
+
+        )
+
+    [selfRecursion] => MyClass Object
+ *RECURSION*
+)
+</pre><script type="text/javascript">phpPrintRBeautifier()</script>
+
+
+
+<pre id="test" style="display:none">
 MyClass Object
 (
     [secret:MyClass:private] => secret data
@@ -47,6 +116,9 @@ MyClass Object
  *RECURSION*
 )
 </pre>
+
+<script type="text/javascript">phpPrintRBeautifier(document.getElementById('test'))</script>
+
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 // https://github.com/vearutop/javascript-print_r-tree
-var phpPrintRBeautifier = function(c){
+(function(c){
     if ('undefined' == typeof c) {
         var ss=document.getElementsByTagName('script');c = (ss[ss.length-1]).previousSibling;
     }
@@ -95,4 +95,4 @@ var phpPrintRBeautifier = function(c){
     }
 
     prepare(c);
-};
+})();
